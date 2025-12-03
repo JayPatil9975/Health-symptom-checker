@@ -1,0 +1,143 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "symptom-check",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        48,
+        160
+      ],
+      "id": "ece07142-32e6-415e-8536-6928799982d3",
+      "name": "Webhook",
+      "webhookId": "eaeeb292-b4ee-4d60-b1dc-f7b9019dc61b"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.body.symptoms }}",
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "You are a medical symptom analysis assistant designed for educational purposes only.\n\nYour task is to:\n1. Analyze the provided symptoms carefully\n2. Suggest 3-5 probable conditions that could match these symptoms, ordered by likelihood\n3. For each condition, provide:\n   - Condition name\n   - Brief description (2-3 sentences)\n   - Matching symptoms from the input\n   - Severity level (mild, moderate, severe)\n4. Provide general recommendations for next steps\n5. Include appropriate medical disclaimers\n\nIMPORTANT GUIDELINES:\n- This is for educational purposes only\n- Always recommend consulting a healthcare professional\n- Do not provide definitive diagnoses\n- Consider common conditions before rare ones\n- Be clear about uncertainty\n- Include emergency warning signs when relevant\n\nOutput your analysis in the structured format defined by the schema."
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        272,
+        160
+      ],
+      "id": "ea392633-7259-4afe-a9fd-e42dd123842d",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "options": {
+          "temperature": 0.2
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        272,
+        384
+      ],
+      "id": "fc6d2d7b-3e9a-41bd-a49b-a1ed1bc96505",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "L2XBePvnMbWxK2Ho",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"disclaimer\": \"This analysis is for educational purposes only and does not constitute medical advice. Please consult a healthcare professional for proper diagnosis and treatment.\",\n\t\"emergencyWarning\": \"If you experience severe chest pain, difficulty breathing, or loss of consciousness, seek emergency medical attention immediately.\",\n\t\"symptomsAnalyzed\": [\"fever\", \"headache\", \"fatigue\"],\n\t\"probableConditions\": [\n\t\t{\n\t\t\t\"conditionName\": \"Common Cold\",\n\t\t\t\"description\": \"A viral infection of the upper respiratory tract that typically resolves on its own within 7-10 days.\",\n\t\t\t\"matchingSymptoms\": [\"fever\", \"fatigue\"],\n\t\t\t\"severity\": \"mild\",\n\t\t\t\"likelihood\": \"high\"\n\t\t},\n\t\t{\n\t\t\t\"conditionName\": \"Influenza\",\n\t\t\t\"description\": \"A contagious respiratory illness caused by influenza viruses that can cause mild to severe illness.\",\n\t\t\t\"matchingSymptoms\": [\"fever\", \"headache\", \"fatigue\"],\n\t\t\t\"severity\": \"moderate\",\n\t\t\t\"likelihood\": \"moderate\"\n\t\t}\n\t],\n\t\"recommendations\": [\n\t\t\"Get plenty of rest and stay hydrated\",\n\t\t\"Monitor your temperature regularly\",\n\t\t\"Consider over-the-counter pain relievers for symptom relief\"\n\t],\n\t\"whenToSeeDoctor\": [\n\t\t\"Symptoms persist for more than 10 days\",\n\t\t\"High fever above 103°F (39.4°C)\",\n\t\t\"Difficulty breathing or chest pain\",\n\t\t\"Symptoms worsen after initial improvement\"\n\t]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        480,
+        384
+      ],
+      "id": "d38cd3a4-fa34-4ceb-860e-22a05080ca0c",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "7724a4ce-dcf3-445e-9f2b-a3dda6a3cb83",
+      "name": "Return Symptom Analysis",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        624,
+        160
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Return Symptom Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "instanceId": "ebc19d53aad75df46e25d9fc56fe254caccfaf786c164a60d769c1aaebc29e6b"
+  }
+}
