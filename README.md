@@ -197,8 +197,8 @@ You can run n8n using:
 1. Open your **n8n UI**
 2. Click **Create Workflow**
 3. Click the **three dots (⋮)** → **Import from File**
-4. Select:
-
+4. Select the workflow file:  
+   👉 [`backend_using_n8n/n8n_workflow.json`](./backend_using_n8n/n8n_workflow.json) 
 
 ---
 
