@@ -58,26 +58,11 @@ This project demonstrates a **modern low-code + code** architecture:
 ![Frontend Results Screen](./assets/n8n_workflow.png)
 ---
 
-### 🏗 Architecture
+**4. 🏗 Architecture**
 
-High-level architecture:
+![Frontend Results Screen](./assets/healthCareWorkflow.png)
 
 
-+---------------------------+        +-----------------------+
-|     React Frontend        |        |         n8n           |
-|---------------------------|        |-----------------------|
-| - Symptom input form      |  HTTP  | - Webhook Node        |
-| - Calls /symptom-check -->+------->+ - Basic LLM Chain     |
-| - Renders JSON response   |  POST  | - Google Gemini Model |
-| - Cards for conditions    |        | - Structured Parser   |
-+---------------------------+        | - Respond to Webhook  |
-                                     +-----------------------+
-                                                |
-                                                | Google AI Studio API
-                                                v
-                                       +-------------------+
-                                       |  Gemini 2.5 Flash |
-                                       +-------------------+ 
 ## 🧩 Full System Breakdown
 
 ### **Frontend**
