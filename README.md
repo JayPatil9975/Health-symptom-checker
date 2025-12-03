@@ -1,5 +1,7 @@
 # 🏥 AI-Powered Health Symptom Checker
 
+🔗 **Live Demo:** [https://your-deployed-link-here](https://health-symptom-checker-c0c0pads8.vercel.app/) 
+
 > **Disclaimer:**  
 > This is an **educational prototype** that demonstrates the use of generative AI in health-related contexts.  
 > It is **not** a medical device and must **not** be used for diagnosis, treatment, or emergency decision-making.
@@ -24,11 +26,6 @@ The focus of this project is to demonstrate:
 5. [Folder Structure](#-folder-structure)  
 6. [Backend Setup (n8n)](#-backend-setup-n8n)  
 7. [Frontend Setup (React + Vite)](#-frontend-setup-react--vite)  
-8. [API Contract](#-api-contract)  
-9. [Safety & Limitations](#-safety--limitations)  
-10. [Potential Enhancements](#-potential-enhancements)  
-11. [How This Demonstrates “Unthinkable” Skills](#-how-this-demonstrates-unthinkable-skills)  
-12. [License](#-license)
 
 ---
 
@@ -38,7 +35,7 @@ This project demonstrates a **modern low-code + code** architecture:
 
 - The **backend API** is implemented as an **n8n workflow**, not as a traditional Express / Django app.
 - The **frontend** is a standard React SPA (Single Page Application) built using **Vite** and **TailwindCSS**.
-- The backend calls **Google Gemini (1.5 Flash)** to:
+- The backend calls **Google Gemini (2.5 Flash)** to:
   - Parse the user’s symptom description,
   - Suggest **probable conditions** (non-diagnostic),
   - Provide **general recommendations** and **“when to see a doctor”** guidance,
@@ -133,7 +130,7 @@ This project demonstrates a **modern low-code + code** architecture:
 
 | Model | Description |
 |-------|-------------|
-| **Google Gemini 1.5 Flash** | Generates structured medical-educational insights. |
+| **Google Gemini 2.5 Flash** | Generates structured medical-educational insights. |
 
 ---
 
@@ -245,11 +242,12 @@ npm install
 
 Open frontend/src/App.jsx and update the API_URL constant at the top:
 
-
+```text
 // --- CONFIGURATION ---
 // OLD: const API_URL = "http://localhost:5678/webhook-test/symptom-check";
 // NEW (Example):
 const API_URL = "https://[YOUR-INSTANCE].app.n8n.cloud/webhook-test/symptom-check";
+```
 
 ### **3. Start the Dev Server**
 ```bash
