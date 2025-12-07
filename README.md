@@ -1,6 +1,6 @@
 # 🏥 AI-Powered Health Symptom Checker
 
-🔗 **Live Demo:** [link-here](https://health-symptom-checker-c0c0pads8.vercel.app/) 
+🔗 **Live Demo:** [link-here](https://health-symptom-checker01.onrender.com/) 
 
 > **Disclaimer:**  
 > This is an **educational prototype** that demonstrates the use of generative AI in health-related contexts.  
